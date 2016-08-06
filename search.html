@@ -1,0 +1,83 @@
+<html>
+<head>
+	<meta content="text/html; utf-8" />
+	<style type="text/css">
+		.ddd {
+			padding: 5px;
+			position: absolute; 
+			top: 23px; 
+			left: 0;
+			background: #f5f5f5; 
+			width: 122px;
+			display: none;
+		}
+		#tishi {
+			position: absolute;
+			top: 0;
+			left: 0;
+			z-index: 1;
+		}
+		#input1 {
+			position: relative;
+			opacity: 0.5;
+			z-index: 33;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div style="position: relative;">
+		<input type="text" id="input1" />
+		<input type="text" id="tishi"/>
+		<div id="ddd" class="ddd"></div>
+	</div>
+</body>
+<script>
+	var input1 = document.getElementById('input1');
+	var tishi = document.getElementById('tishi');
+	var arr = ["asd","sdf","sss","adsjk","sadasd","asdas","hhhs"];
+
+	function render(brr) {
+
+		var html = '';
+		brr.forEach(function(val) {
+			html += '<li>' + val + '</li>';
+		});
+		
+		return html;
+	}
+
+	function search_arr(arr){
+		var val = input1.value || input1.getAttribute('value');
+        var brr = [];
+
+		if(val) {
+			arr.forEach(function(item) {
+				if(item.indexOf(val) == 0){
+					brr.push(item);
+				};
+			});
+
+			document.getElementById('ddd').innerHTML = render(brr);
+			document.getElementById('ddd').style.display = brr.length>0?"block":"none";
+
+		}else {
+
+			document.getElementById('ddd').style.display = "none";
+
+		}
+
+		tishi.value = brr[0] || '';
+
+	}
+	input1.onkeyup = function(){
+
+		search_arr(arr);
+
+	}
+	
+
+
+	</script>
+</html>
