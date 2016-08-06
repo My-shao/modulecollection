@@ -1,0 +1,79 @@
+<html>
+<header>
+	<meta content="text/html; utf-8" />
+	<style>
+	*{
+		margin: 0;
+		padding: 0;
+	}
+	#div1{
+		width: 100px;
+		height: 100px;
+		background-color: red;
+	}
+
+	</style>
+
+</header>
+<body>
+	<div id="div1"></div>
+</body>
+<script>
+	function Drag(id) {
+		this.div = document.getElementById(id);
+		if (this.div) {
+			this.div.style.cursor = "move";
+			this.div.style.position = "absolute";
+		}
+		this.len_X = 0;
+		this.len_Y = 0;
+		var self = this; 
+
+		this.div.onmousedown = function(e) {
+			self.getLen();
+
+			document.onmousemove = function(e) {
+				self.setPos();
+			}
+			self.div.onmouseup = function () {
+				self.clearMove();
+			}	
+		}
+		// self.div.onmouseup=self.clearMove();
+	}
+	Drag.prototype.getLen=function(e){
+
+		var objectEvent = e || event;
+
+		this.len_X = objectEvent.clientX - this.div.offsetLeft;
+		this.len_Y = objectEvent.clientY - this.div.offsetTop;
+	}
+	Drag.prototype.setPos=function(e){
+
+		var objectEvent = e || event;
+
+		var left = objectEvent.clientX - this.len_X;
+		var top =  objectEvent.clientY - this.len_Y;
+
+		if (left <= 0){
+			left = 0;
+		}else if(left >= document.documentElement.clientWidth - this.div.offsetWidth){
+			left = document.documentElement.clientWidth - this.div.offsetWidth;
+		}
+		if (top<=0){
+			top =0 ;
+		}else if(top >= document.documentElement.clientHeight - this.div.offsetHeight){
+			top = document.documentElement.clientHeight - this.div.offsetHeight;
+		}
+		this.div.style.left = left+"px";
+		this.div.style.top = top+"px";
+		// console.log("----------top"+top)
+	}
+	Drag.prototype.clearMove = function () {
+		document.onmousemove = null;
+		this.div.onmouseup = null;
+		
+	}
+	new Drag('div1');
+</script>
+</html>
