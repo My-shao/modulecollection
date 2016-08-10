@@ -1,0 +1,82 @@
+<html>
+<head>
+	<title>Javascript 弹幕</title>
+	<meta content="text/html;charset=utf8"/>
+	<style type="text/css">
+		#play {
+			width: 600px;
+			height: 300px;
+			border: 2px solid #f5f5f5;
+			background-color: #f5f5f5;
+		}
+		#tanmu {
+			width: 600px;
+			height: 300px;
+			background: #fff;
+			z-index: 9999;
+			position: relative;
+			overflow: hidden;
+			margin: 0 auto;
+			color: #000;
+		}
+		#textstyle {
+			position: absolute;
+			display: block;
+			font-size: 24px;
+			color: #000;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="play">
+		<div id="tanmu">
+
+		</div>
+	</div>
+	<input type="text" id="text" value="这是弹幕..."/>
+	<input type="button" value="发送" onclick="tanmu();">
+
+	<script type="text/javascript">
+		var si;
+
+		function $ (id) {
+			return document.getElementById(id);
+		}
+
+		function tanmu () {
+			clearInterval(si);
+
+			var text = $('text'), 
+				tanmu = $('tanmu');
+
+			var _content = '<font id=\"textstyle\">' + text.value + '</font>';
+
+			var MATHEIGHT = Math.round(Math.random() * tanmu.offsetHeight) + 'px';
+			var TEXTLEFT = tanmu.offsetWidth + 'px';
+
+			tanmu.innerHTML = _content;
+
+			var obj = $('textstyle');
+			obj.style.left = TEXTLEFT;
+			obj.style.top = MATHEIGHT;
+
+			var move_content = parseInt(obj.style.left);
+			console.log(obj.offsetWidth);
+
+			si = setInterval(function () {
+				console.log(obj.style.width);
+				obj.style.left = move_content + 'px';
+				if(obj.style.left < obj.style.width) {
+					clearInterval(si);
+				}else{
+					move_content = move_content - 10;
+				}
+			}, 100);
+		}
+
+
+
+	</script>
+</body>
+</html>
