@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<body>
+<!--页面布局-->
+<div>
+    <!--图片相关属性设置-->
+	<img style="position:absolute;left:0;top:0" src="http://img.mukewang.com/53577ee900016c2102080260.jpg" id="myImage" />
+	<!--滑动按钮设置-->
+    <button id="btn" style="margin-top:300px;">anniu</button>
+</div>
+</body>
+<script>
+	window.onload = function(){
+		var img = document.getElementById("myImage");
+		var btn = document.getElementById("btn");
+		btn.onclick = function(){
+			alert(img.style.left);
+			imgSlide();	//点击按钮时执行滑动函数
+		};
+		var maxLeft = 700;//向右滑动的极限值
+
+		//实现滑动函数
+		function imgSlide(){
+			var endLeft = img.style.left + 300 + 'px'; //每次点击后向右滑动300px
+			var slideTimer = setInterval(function(){
+		        var imgLeft = img.style.left;  //现在距离左边的距离
+				if(imgLeft < endLeft){
+					if(imgLeft < maxLeft){
+						//将图片的左偏移（left值）增加20px，注意单位                  
+						imgLeft = img.style.left + 20 + 'px';
+					
+					}else{
+					    alert('da');        
+					    clearInterval(slideTimer); //终止定时器函数
+						
+					}
+				}else{
+						clearInterval(slideTimer);	
+				}
+			},10);	
+		}
+	}
+</script>
+</html>
